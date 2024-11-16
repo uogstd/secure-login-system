@@ -2,6 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { jwtDecode } from 'jwt-decode';
 import './App.css';
 
+const API_URL = process.env.REACT_APP_API_URL; // Move this here for modular use
+
 function App() {
   const [user, setUser] = useState(null);
   const [username, setUsername] = useState('');
@@ -64,7 +66,21 @@ function App() {
     } else {
       loadGoogleSignIn();
     }
-  }, []);
+
+  }, []); // Empty dependency array means this runs once when the component mounts.
+
+  // Fetch example - Now this useEffect is separate from the Google sign-in logic
+  useEffect(() => {
+    fetch(`${API_URL}/your-api-endpoint`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+      .then(response => response.json())
+      .then(data => console.log(data))
+      .catch(error => console.error('Error:', error));
+  }, []); // Empty dependency array to ensure this runs once when the component mounts.
 
   // Welcome component to show after successful login
   function Welcome() {

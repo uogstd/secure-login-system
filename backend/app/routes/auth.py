@@ -26,7 +26,7 @@ def configure_oauth(app):
 @auth_bp.route('/google')
 def google_auth():
     # Redirect to Google's OAuth authorization URL
-    redirect_uri = current_app.config.get('REDIRECT_URI') or 'http://localhost:3000'
+    redirect_uri = current_app.config.get('REDIRECT_URI') or 'http://localhost:5000'
     return oauth.google.authorize_redirect(redirect_uri=redirect_uri)
 
 @auth_bp.route('/google/callback')
@@ -45,7 +45,7 @@ def google_callback():
 # Root route for the main blueprint
 @main_bp.route('/')
 def home():
-    return "Hello, World!"  # This will display on the root page
+    return "Hello from the backend!"  # This will display on the root page
 
 # Handle the favicon.ico request to avoid 404 error
 @main_bp.route('/favicon.ico')
